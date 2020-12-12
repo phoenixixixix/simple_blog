@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :destroy]
 
   # GET /posts
   def index
@@ -22,7 +22,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to @post, notice: 'Post was successfully created.'
     else
-      render :new
+      render 'new'
     end
   end
 
@@ -40,8 +40,8 @@ class PostsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def post_params
-    params.require(:posts).permit(:title,
-                                  :text,
-                                  :category)
+    params.require(:post).permit(:title,
+                                 :text,
+                                 :category_id)
   end
 end
