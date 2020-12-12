@@ -29,7 +29,7 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   def destroy
     @post.destroy
-    redirect_to posts_url, notice: 'Post was successfully destroyed.'
+    redirect_to categories_path, notice: 'Post was successfully destroyed.'
   end
 
   private
@@ -40,8 +40,6 @@ class PostsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def post_params
-    params.require(:post).permit(:title,
-                                 :text,
-                                 :category_id)
+    params.require(:post).permit(:text, :category_id)
   end
 end
