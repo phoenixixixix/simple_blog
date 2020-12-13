@@ -1,8 +1,57 @@
 <%= form_for @post do |f| %>
-  <%= f.label :text %>
-  <%= f.text_area :text %>
+  <div class="container">
+    <div class="row">
+        <% if @post.errors.any? %>
+          <div id="error_explanation">
+            <p class="text-danger"><%= pluralize(@post.errors.count, "error") %> prohibited this category from being saved:</p>
 
-  <%= f.select :category_id, Category.all.map {|c| [c.title, c.id]} %>
+            <ul class="text-danger">
+              <% @post.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+    </div>
 
-  <%= f.submit%>
+    <div class="row">
+      <div class="col px-0">
+        <%= f.label :text, 'Enter text:'%>
+      </div>
+      <div class="col-12 px-0">
+        <%= f.text_area :text, size: "39x9"%>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col px-0">
+        <p>Enter category:</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col px-0">
+        <%= check_box "enable", id:"enable", type:"checkbox" %>
+
+
+        <%= f.fields_for :category do |a| %>
+          <%= a.label :title, 'Create new' %>
+          <%= a.text_field :title, disabled: true%>
+        <% end %>
+      </div>
+    </div>
+
+    <p class="h6">or</p>
+
+    <div class="row">
+      <div class="col px-0">
+        <%= f.label :category_id, 'Select from existing' %>
+        <%= f.select :category_id, Category.all.map {|c| [c.title, c.id]} %>
+      </div>
+    </div>
+
+    <div class="row">
+      <%= f.submit %>
+    </div>
+  </div>
 <% end %>

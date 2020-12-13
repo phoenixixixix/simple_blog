@@ -13,6 +13,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    @post.build_category
   end
 
   # POST /posts
@@ -40,6 +41,6 @@ class PostsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def post_params
-    params.require(:post).permit(:text, :category_id)
+    params.require(:post).permit(:text, :category_id, category_attributes: [:title])
   end
 end
